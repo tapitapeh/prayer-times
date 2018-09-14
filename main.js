@@ -15,3 +15,16 @@ function showTime(){
 }
 
 showTime();
+
+function getPrayerTimes(){
+  var times = {
+    'imsak': '05:39',
+    'subuh': '05:49',
+    'syuruk': '07:03',
+    'dhuha': '07:27',
+    'zohor': '13:12',
+    'asar': '16:12',
+    'maghrib': '19:15',
+    'isyak': '20:24'
+  }
+}
