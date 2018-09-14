@@ -4,14 +4,13 @@ body {
 
 .clock-bg {
   position: absolute;
-  height: 400px;
-  width: 400px;
+  height: 300px;
+  width: 300px;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   color: #000;
-  font-size: 60px;
-  letter-spacing: 7px;
+  font-size: 40px;
   background-image: url('/img/clock-background.svg');
   background-repeat: no-repeat;
   
@@ -20,27 +19,74 @@ body {
   justify-content: center;
 }
 
-.clock-text {
+/* .clock-text {
   max-width: 40%;
-}
+} */
 
 .circular-chart {
   display: block;
-  margin: 10px auto;
+  /* margin: 10px auto;
   max-width: 80%;
-  max-height: 250px;
+  max-height: 250px; */
 }
 
 .circle {
-  stroke: #4CC790;
   fill: none;
-  stroke-width: 2.8;
+  stroke-width: 2;
   stroke-linecap: round;
   animation: progress 1s ease-out forwards;
 }
 
 @keyframes progress {
   0% {
-    stroke-dasharray: 0 100;
+    stroke-dasharray: 0 360;
   }
 }
+
+.prayer-indicators {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.prayer-indicators.subuh > svg > path {
+  stroke: #438BB9;
+}
+
+.prayer-indicators.syuruk > svg > path {
+  stroke: #77C26E;
+}
+
+.prayer-indicators.zuhr > svg > path {
+  stroke: #72C3A7;
+}
+
+.prayer-indicators.ashar > svg > path {
+  stroke: #54B29D;
+}
+
+.prayer-indicators.maghrib > svg > path {
+  stroke: #95C9DB;
+}
+
+.prayer-indicators.isya > svg > path {
+  stroke: #5BBBDB;
+}
+
+.prayer-indicators.bg > svg > path {
+  stroke: #E7E7E7;
+}
+
+.prayer-indicators.zuhr > svg {
+  transform: rotate(60deg);
+  transform-origin: 50% 50%;
+}
+
+.prayer-indicators.ashar > svg {
+  transform: rotate(200deg);
+  transform-origin: 50% 50%;
+}
+
