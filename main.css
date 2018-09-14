@@ -65,7 +65,7 @@ svg.asr > path {
 }
 
 svg.maghrib > path {
-  stroke: #95C9DB;
+  stroke: #3ECDE6;
 }
 
 svg.isha > path {
@@ -75,14 +75,4 @@ svg.isha > path {
 svg.bg > path {
   stroke: #E7E7E7;
 }
-
-/* .prayer-indicators.zuhr > svg {
-  transform: rotate(60deg);
-  transform-origin: 50% 50%;
-}
-
-.prayer-indicators.ashar > svg {
-  transform: rotate(200deg);
-  transform-origin: 50% 50%;
-} */
 
