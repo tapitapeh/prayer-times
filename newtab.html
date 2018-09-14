@@ -9,11 +9,15 @@
 </head>
 <body>
   <div class="clock-bg">
-    <div id="clock" class="clock-text"></div>
+    <div class="clock-text">
+      <span id="hour"></span>
+      <span id="colon">:</span>
+      <span id="minute"></span>
+    </div>
   </div>
 
-  <div class="prayer-indicators bg">
-    <svg viewBox="0 0 36 36" class="circular-chart">
+  <div class="prayer-indicators">
+    <svg viewBox="0 0 36 36" class="circular-chart bg">
         <path class="circle"
           stroke-dasharray="100, 100"
           d="M18 2.0845
@@ -23,8 +27,30 @@
       </svg>
   </div>
   
-  <div class="prayer-indicators ashar">
-    <svg viewBox="0 0 36 36" class="circular-chart">
+  <div class="prayer-indicators">
+      <svg viewBox="0 0 36 36" class="circular-chart isha">
+          <path class="circle"
+            stroke-dasharray="20, 100"
+            d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+          />
+        </svg>
+    </div>
+
+  <div class="prayer-indicators">
+      <svg viewBox="0 0 36 36" class="circular-chart maghrib">
+          <path class="circle"
+            stroke-dasharray="20, 100"
+            d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+          />
+        </svg>
+    </div>
+
+  <div class="prayer-indicators">
+    <svg viewBox="0 0 36 36" class="circular-chart asr">
         <path class="circle"
           stroke-dasharray="20, 100"
           d="M18 2.0845
@@ -33,8 +59,8 @@
         />
       </svg>
   </div>
-  <div class="prayer-indicators zuhr">
-    <svg viewBox="0 0 36 36" class="circular-chart">
+  <div class="prayer-indicators">
+    <svg viewBox="0 0 36 36" class="circular-chart dhuhr">
         <path class="circle"
           stroke-dasharray="40, 100"
           d="M18 2.0845
@@ -43,8 +69,8 @@
         />
       </svg>
   </div>
-  <div class="prayer-indicators subuh">
-    <svg viewBox="0 0 36 36" class="circular-chart">
+  <div class="prayer-indicators">
+    <svg viewBox="0 0 36 36" class="circular-chart fajr">
         <path class="circle"
           stroke-dasharray="20, 100"
           d="M18 2.0845

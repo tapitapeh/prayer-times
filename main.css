@@ -19,15 +19,11 @@ body {
   justify-content: center;
 }
 
-/* .clock-text {
-  max-width: 40%;
-} */
+#colon { visibility:hidden }
 
 .circular-chart {
   display: block;
-  /* margin: 10px auto;
-  max-width: 80%;
-  max-height: 250px; */
+  transform-origin: 50% 50%;
 }
 
 .circle {
@@ -52,35 +48,35 @@ body {
   transform: translateX(-50%) translateY(-50%);
 }
 
-.prayer-indicators.subuh > svg > path {
+svg.fajr > path {
   stroke: #438BB9;
 }
 
-.prayer-indicators.syuruk > svg > path {
+svg.syuruk > path {
   stroke: #77C26E;
 }
 
-.prayer-indicators.zuhr > svg > path {
+svg.dhuhr > path {
   stroke: #72C3A7;
 }
 
-.prayer-indicators.ashar > svg > path {
+svg.asr > path {
   stroke: #54B29D;
 }
 
-.prayer-indicators.maghrib > svg > path {
+svg.maghrib > path {
   stroke: #95C9DB;
 }
 
-.prayer-indicators.isya > svg > path {
+svg.isha > path {
   stroke: #5BBBDB;
 }
 
-.prayer-indicators.bg > svg > path {
+svg.bg > path {
   stroke: #E7E7E7;
 }
 
-.prayer-indicators.zuhr > svg {
+/* .prayer-indicators.zuhr > svg {
   transform: rotate(60deg);
   transform-origin: 50% 50%;
 }
@@ -88,5 +84,5 @@ body {
 .prayer-indicators.ashar > svg {
   transform: rotate(200deg);
   transform-origin: 50% 50%;
-}
+} */
 
