@@ -1,0 +1,14 @@
+{
+  "name": "Prayer Times",
+  "version": "1.0",
+  "description": "Prayer Times",
+  "manifest_version": 2,
+
+  "browser_action": {
+    "default_title": "Prayer Times"
+  },
+ "chrome_url_overrides" : {
+   "newtab": "newtab.html"
+ },
+  "permissions": ["activeTab"]
+}
