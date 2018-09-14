@@ -1,27 +1,26 @@
 var toggle = true;
-function showTime(){
-  setInterval(function(){
 
-    var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    
-    var time = h + ":" + m;
-    document.getElementById("hour").innerText = h;
-    document.getElementById("hour").textContent = h;
-    
-    document.getElementById("minute").innerText = m;
-    document.getElementById("minute").textContent = m;
-    
-    document.getElementById("colon").style.visibility = toggle?"visible":"hidden";
-    toggle=!toggle;
-  }, 1000);
+setInterval(function(){
+  document.getElementById("colon").style.visibility = toggle?"visible":"hidden";
+  toggle=!toggle;
+}, 1000);
+
+function showTime(){
+  var date = new Date();
+  var h = date.getHours(); // 0 - 23
+  var m = date.getMinutes(); // 0 - 59
   
-  // setTimeout(showTime, 1000);
+  h = (h < 10) ? "0" + h : h;
+  m = (m < 10) ? "0" + m : m;
   
+  var time = h + ":" + m;
+  document.getElementById("hour").innerText = h;
+  document.getElementById("hour").textContent = h;
+  
+  document.getElementById("minute").innerText = m;
+  document.getElementById("minute").textContent = m;
+  
+  setTimeout(showTime, 1000);
 }
 
 
@@ -33,7 +32,6 @@ request.onload = function() {
     // Success!
     var resp = request.responseText;
     
-    console.log(JSON.parse(request.responseText) );
     renderTime( JSON.parse(request.responseText).data.timings );
     showTime();
   } else {
@@ -49,8 +47,6 @@ request.onerror = function() {
 request.send();
 
 function getIntervalWaktu(awal, akhir){
-  console.log('awal', awal);
-  console.log('akhir', akhir);
   var a = awal.split(':');
   var a_minutes = (+a[0]) * 60 + (+a[1]);
   
@@ -68,6 +64,7 @@ function getIntervalWaktu(awal, akhir){
 
   return res;
 }
+
 function renderTime(timings) {
   var interval_antarwaktu = {
     'fajr' : getIntervalWaktu(timings['Fajr'], timings['Sunrise']),
@@ -93,5 +90,11 @@ function renderTime(timings) {
         indi_path.setAttribute('stroke-dasharray', interval_antarwaktu[x.toLowerCase()] + ', 100');
       }
     }
+  }
+
+  document.getElementById('clock-container').classList.add('open');
+  var els = document.querySelectorAll('.circle');
+  for (var i = 0; i < els.length; i++) {
+    els[i].classList.add('animate')
   }
 }
