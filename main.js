@@ -97,4 +97,15 @@ function renderTime(timings) {
   for (var i = 0; i < els.length; i++) {
     els[i].classList.add('animate')
   }
+
+  clickListener();
+}
+
+function clickListener(){
+  var classname = document.getElementsByClassName("circular-chart");
+  for (var i = 0; i < classname.length; i++) {
+    classname[i].addEventListener('click', function(){
+      console.log('test', this.getAttribute("style"));
+    });
+  }
 }
