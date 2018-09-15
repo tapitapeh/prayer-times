@@ -1,5 +1,6 @@
 var toggle = true;
 const intervalLength = 0.06944444444444445;
+const storageName = 'prayertimes24h' + getTodayDate();
 
 // blinking colon
 setInterval(function(){
@@ -22,39 +23,52 @@ function showTime(){
   document.getElementById("minute").innerText = m;
   document.getElementById("minute").textContent = m;
 
-  var minutes = (h) * 60 + (m);
+  var minutes = parseFloat(h) * 60 + parseFloat(m);
   document.getElementById("circle-now").style.transform = 'rotate(' + minutes*0.25 + 'deg)';
-  
+
   setTimeout(showTime, 1000);
 }
 
 function getTimeFromAPI(){
   // ajax request
-  /*
-    todo:
-    1. get city/country name by location
-    2. using cache
-  */
-  var request = new XMLHttpRequest();
-  request.open('GET', 'http://api.aladhan.com/v1/timingsByCity?city=kajang&country=malaysia&method=11', true);
-  
-  request.onload = function() {
-    if (request.status >= 200 && request.status < 400) {
-      // Success!
-      var resp = request.responseText;
+
+  chrome.storage.sync.get('prayertimes24h', function(data) {
+    console.log(data);
+    if (!isEmpty(data) && !isExpired(getTodayDate(), data[Object.keys(data)[0]].expired )) {
+        renderTime( data[Object.keys(data)[0]].timings );
+        showTime();
+        console.log('from storage');
+      } else {
+        // if not set then set it
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://api.aladhan.com/v1/timingsByCity?city=tembilahan&country=indonesia&method=11', true);
+        
+        request.onload = function() {
+          if (request.status >= 200 && request.status < 400) {
+            // Success!
+            var resp = request.responseText;
+            
+            renderTime( JSON.parse(request.responseText).data.timings );
+            showTime();
+
+            var storageData = JSON.parse(request.responseText).data;
+            storageData['expired'] = getTodayDate(true);
+            
+            chrome.storage.sync.clear();
+            chrome.storage.sync.set({'prayertimes24h' : storageData})
+            console.log('from api');
+        } else {
+          // We reached our target server, but it returned an error
+        }
+      };
       
-      renderTime( JSON.parse(request.responseText).data.timings );
-      showTime();
-    } else {
-      // We reached our target server, but it returned an error
+      request.onerror = function() {
+        // There was a connection error of some sort
+      };
+      
+      request.send(); 
     }
-  };
-  
-  request.onerror = function() {
-    // There was a connection error of some sort
-  };
-  
-  request.send();
+  });
 }
 
 function getIntervalWaktu(a, z){
@@ -118,6 +132,40 @@ function clickListener(){
       console.log('test', this.getAttribute("stroke-dasharray"));
     });
   }
+}
+
+function getTodayDate(tomorrow){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if (tomorrow) ++dd;
+
+  if(dd<10) {
+    dd = '0'+dd
+  } 
+
+  if(mm<10) {
+    mm = '0'+mm
+  }
+
+  return dd+mm+yyyy;
+}
+
+function isEmpty(obj) {
+  for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+          return false;
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}
+
+function isExpired(a,b){
+  console.log('isExpired',a,b);
+  if (a===b) return true;
+  return false;
 }
 
 getTimeFromAPI();

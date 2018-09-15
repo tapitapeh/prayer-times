@@ -9,7 +9,8 @@
 }
 
 body {
-  background: #FAFAFA;
+  /* background: #FAFAFA; */
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#EAEAEA)) fixed;
 }
 
 .clock-bg {
