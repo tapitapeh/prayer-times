@@ -21,6 +21,9 @@ function showTime(){
   
   document.getElementById("minute").innerText = m;
   document.getElementById("minute").textContent = m;
+
+  var minutes = (h) * 60 + (m);
+  document.getElementById("circle-now").style.transform = 'rotate(' + minutes*0.25 + 'deg)';
   
   setTimeout(showTime, 1000);
 }

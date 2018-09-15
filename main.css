@@ -103,6 +103,10 @@ body {
             transition: opacity 0.1s ease-in;
 }
 
+#circle-now {
+  transform-origin: 50% 50%;
+}
+
 /* stroke for svg */
 .fajr {
   stroke: var(--fajr);
