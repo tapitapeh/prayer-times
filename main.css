@@ -1,3 +1,13 @@
+:root {
+  --fajr: #438BB9;
+  --dhuhr: #72C3A7;
+  --asr: #54B29D;
+  --maghrib: #3ECDE6;
+  --isha: #5BBBDB;
+  --syuruk: #77C26E;
+  --bg: #E7E7E7;
+}
+
 body {
   background: #FAFAFA;
 }
@@ -47,21 +57,24 @@ body {
   opacity: 1;
 }
 
-#colon { visibility:hidden }
+#colon {
+  visibility: hidden
+}
 
 .circular-chart {
   display: block;
-  transform-origin: 50% 50%;
 }
 
 .circle {
   fill: none;
-  stroke-width: 2;
+  stroke-width: 2.5;
   stroke-linecap: round;
-  /* animation: progress 1s ease-out forwards; */
+  transform-origin: 50% 50%;
+  opacity: 0;
 }
 
 .circle.animate {
+  opacity: 1;
   animation: progress 1s ease-out forwards;
 }
 
@@ -90,31 +103,39 @@ body {
             transition: opacity 0.1s ease-in;
 }
 
-svg.fajr > path {
-  stroke: #438BB9;
+/* stroke for svg */
+.fajr {
+  stroke: var(--fajr);
+  background-color: var(--fajr);
 }
 
-svg.syuruk > path {
-  stroke: #77C26E;
+.syuruk {
+  stroke: var(--syuruk);
+  background-color: var(--syuruk);
 }
 
-svg.dhuhr > path {
-  stroke: #72C3A7;
+.dhuhr {
+  stroke: var(--dhuhr);
+  background-color: var(--dhuhr);
 }
 
-svg.asr > path {
-  stroke: #54B29D;
+.asr {
+  stroke: var(--asr);
+  background-color: var(--asr);
 }
 
-svg.maghrib > path {
-  stroke: #3ECDE6;
+.maghrib {
+  stroke: var(--maghrib);
+  background-color: var(--maghrib);
 }
 
-svg.isha > path {
-  stroke: #5BBBDB;
+.isha {
+  stroke: var(--isha);
+  background-color: var(--isha);
 }
 
-svg.bg > path {
-  stroke: #E7E7E7;
+.bg {
+  stroke: var(--bg);
+  background-color: var(--bg);
 }
 
