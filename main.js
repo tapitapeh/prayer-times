@@ -2,6 +2,8 @@ var toggle = true;
 const intervalLength = 0.06944444444444445;
 const storageName = 'prayertimes24h' + getTodayDate();
 
+var timer1, timer2, timer3;
+
 // blinking colon
 setInterval(function(){
   document.getElementById("colon").style.visibility = toggle?"visible":"hidden";
@@ -112,6 +114,9 @@ function renderTime(timings) {
         var indicator = document.getElementsByClassName(x.toLowerCase())[0];
         indicator.style.transform = 'rotate(' + minutes*0.25 + 'deg)';
         indicator.setAttribute('stroke-dasharray', interval_antarwaktu[x.toLowerCase()] + ', 100');
+        indicator.setAttribute('data-time', timings[x]);
+        indicator.setAttribute('data-name', x);
+        console.log(timings[x]);
       }
     }
   }
@@ -129,7 +134,31 @@ function clickListener(){
   var classname = document.getElementsByClassName("circle");
   for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener('click', function(){
-      console.log('test', this.getAttribute("stroke-dasharray"));
+      // need better solution. this one seems messy.
+      console.log('this', this.getAttribute('data-name'));
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      document.getElementById('prayer-time-clock__name').className = "";
+      // document.getElementById('prayer-time-clock__name').classList.remove('open');
+      document.getElementById('prayer-time-clock__name').classList.add(this.getAttribute('data-name').toLowerCase());
+
+      document.getElementById("prayer-time-clock__name").innerText = this.getAttribute('data-name');
+      document.getElementById("prayer-time-clock__name").textContent = this.getAttribute('data-name');
+
+      document.getElementById("prayer-time-clock__time").innerText = this.getAttribute('data-time');
+      document.getElementById("prayer-time-clock__time").textContent = this.getAttribute('data-time');
+
+      document.getElementById('clock-container').classList.remove('open');
+      timer1 = setTimeout(function(){
+        document.getElementById('prayer-time-clock').classList.add('open');
+        timer2 = setTimeout(function(){
+          document.getElementById('prayer-time-clock').classList.remove('open');
+          timer3 = setTimeout(function(){
+            document.getElementById('clock-container').classList.add('open');
+          }, 100);
+        }, 2000);
+      }, 100);
     });
   }
 }

@@ -33,11 +33,11 @@ body {
 .content-container {
   opacity: 0;
   position: absolute;
-  -webkit-transition: opacity 0.2s ease-in;
-       -moz-transition: opacity 0.2s ease-in;
-        -ms-transition: opacity 0.2s ease-in;
-         -o-transition: opacity 0.2s ease-in;
-            transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.1s ease-in;
+       -moz-transition: opacity 0.1s ease-in;
+        -ms-transition: opacity 0.1s ease-in;
+         -o-transition: opacity 0.1s ease-in;
+            transition: opacity 0.1s ease-in;
 }
 
 .content-container.open {
@@ -47,11 +47,11 @@ body {
 .prayer-time-clock {
   opacity: 0;
 
-  -webkit-transition: opacity 0.2s ease-in;
-       -moz-transition: opacity 0.2s ease-in;
-        -ms-transition: opacity 0.2s ease-in;
-         -o-transition: opacity 0.2s ease-in;
-            transition: opacity 0.2s ease-in;
+  -webkit-transition: opacity 0.1s ease-in;
+       -moz-transition: opacity 0.1s ease-in;
+        -ms-transition: opacity 0.1s ease-in;
+         -o-transition: opacity 0.1s ease-in;
+            transition: opacity 0.1s ease-in;
 }
 
 .prayer-time-clock.open {
@@ -72,6 +72,7 @@ body {
   stroke-linecap: round;
   transform-origin: 50% 50%;
   opacity: 0;
+  cursor: pointer;
 }
 
 .circle.animate {
@@ -106,6 +107,20 @@ body {
 
 #circle-now {
   transform-origin: 50% 50%;
+}
+
+#prayer-time-clock__name {
+  color: white;
+  border-radius: 50px;
+  padding: 7px 20px;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#prayer-time-clock__time {
+  font-size: 25px;
+  text-align: center;
 }
 
 /* stroke for svg */
