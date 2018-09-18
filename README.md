@@ -1,6 +1,6 @@
 # Prayer Times – Chrome Extension
 
-The web interpretation of [Prayer Times UI design by Edo Putra](https://dribbble.com/shots/2058865-Shalat-Time)
+The web interpretation of [Shalat Time design by Edo Putra](https://dribbble.com/shots/2058865-Shalat-Time)
 
 ## Todo
 * Implement geolocation/google map API
