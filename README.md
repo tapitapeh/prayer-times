@@ -6,4 +6,5 @@ The web interpretation of [Shalat Time design by Edo Putra](https://dribbble.com
 * Implement geolocation/google map API
 * Find better/accurate API for prayer times
 * Enhance the UI (animation, styling, etc)
+* Implement fordidden times for prayers
 * etc
