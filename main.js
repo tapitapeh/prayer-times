@@ -31,23 +31,21 @@ function showTime(){
   setTimeout(showTime, 1000);
 }
 
-function getTimeFromAPI(){
-  // ajax request
-
+function getTime(){
   chrome.storage.sync.get('prayertimes24h', function(data) {
-    console.log(data);
     if (!isEmpty(data) && !isExpired(getTodayDate(), data[Object.keys(data)[0]].expired )) {
         renderTime( data[Object.keys(data)[0]].timings );
         showTime();
-        console.log('from storage');
       } else {
-        // if not set then set it
         var request = new XMLHttpRequest();
-        request.open('GET', 'http://api.aladhan.com/v1/timingsByCity?city=tembilahan&country=indonesia&method=11', true);
+        /*
+          - this API not 100% accurate. need better method like muslimpro.com
+          - hardcoded location. need to implement geolocation
+        */
+        request.open('GET', 'http://api.aladhan.com/v1/timingsByCity?city=pekanbaru&country=indonesia&method=11', true);
         
         request.onload = function() {
           if (request.status >= 200 && request.status < 400) {
-            // Success!
             var resp = request.responseText;
             
             renderTime( JSON.parse(request.responseText).data.timings );
@@ -58,7 +56,6 @@ function getTimeFromAPI(){
             
             chrome.storage.sync.clear();
             chrome.storage.sync.set({'prayertimes24h' : storageData})
-            console.log('from api');
         } else {
           // We reached our target server, but it returned an error
         }
@@ -116,7 +113,6 @@ function renderTime(timings) {
         indicator.setAttribute('stroke-dasharray', interval_antarwaktu[x.toLowerCase()] + ', 100');
         indicator.setAttribute('data-time', timings[x]);
         indicator.setAttribute('data-name', x);
-        console.log(timings[x]);
       }
     }
   }
@@ -135,12 +131,10 @@ function clickListener(){
   for (var i = 0; i < classname.length; i++) {
     classname[i].addEventListener('click', function(){
       // need better solution. this one seems messy.
-      console.log('this', this.getAttribute('data-name'));
       clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       document.getElementById('prayer-time-clock__name').className = "";
-      // document.getElementById('prayer-time-clock__name').classList.remove('open');
       document.getElementById('prayer-time-clock__name').classList.add(this.getAttribute('data-name').toLowerCase());
 
       document.getElementById("prayer-time-clock__name").innerText = this.getAttribute('data-name');
@@ -192,9 +186,8 @@ function isEmpty(obj) {
 }
 
 function isExpired(a,b){
-  console.log('isExpired',a,b);
   if (a===b) return true;
   return false;
 }
 
-getTimeFromAPI();
+getTime();
