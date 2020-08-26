@@ -5,13 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Prayer Times</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link
-      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
       rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="tailwind.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
     />
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 
     <style>
+      .container {
+        opacity: 0;
+        transition-duration: 1s;
+      }
+
+      .container.show {
+        opacity: 1;
+      }
+
       .main-container {
         width: 500px;
         height: 500px;
@@ -19,26 +35,60 @@
       .countdown-container {
         text-align: center;
       }
+
+      #sunrise-indicator,
+      #sunset-indicator {
+        padding: 1.5rem;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+
+      #sunrise-indicator-image,
+      #sunset-indicator-image,
+      #pin-indicator-image {
+        /* transform: scale(0); */
+        /* opacity: 0; */
+        transition-duration: 0.5s;
+      }
+
+      #sunrise-indicator-image.show {
+        animation: opacity 3s;
+      }
+      #sunset-indicator-image.show {
+        animation: opacity 5s;
+      }
+      #pin-indicator-image.show {
+        animation: opacity 7s;
+      }
+
+      @keyframes opacity {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body
     class="flex flex-col h-screen justify-center items-center antialiased bg-gradient-to-t from-gray-300 to-white"
   >
-    <div>
+    <div class="container">
       <div class="countdown-container mx-auto">
         <div
-          class="inline-block"
+          id="next-pray-name"
+          class="inline-block capitalize"
           style="
             padding: 5px 20px;
-            background-color: var(--maghrib);
             color: white;
             font-size: 1.5rem;
             border-radius: 30px;
           "
-        >
-          Dhuhr
-        </div>
-        <p class="mt-2 font-semibold">in 2hr 27m</p>
+        ></div>
+        <p id="next-pray-time" class="mt-2 font-semibold">in 2hr 27m</p>
       </div>
       <div class="main-container mx-auto relative mt-10">
         <div class="prayer-indicators absolute w-full z-50">
@@ -119,14 +169,47 @@
 
           <img src="/img/clock-background.svg" alt="" class="w-full" />
         </div>
+
+        <div id="sunrise-indicator" class="absolute w-full h-full">
+          <div
+            id="sunrise-indicator-image"
+            class="w-12 h-12 flex items-center p-3 bg-blue-500 rounded-full"
+          >
+            <img
+              id="sunrise-img"
+              src="/img/map-pin.svg"
+              alt=""
+              class="w-full h-full"
+            />
+          </div>
+        </div>
+        <div id="sunset-indicator" class="absolute w-full h-full">
+          <div
+            id="sunset-indicator-image"
+            class="w-12 h-12 flex items-center p-3 bg-red-500 rounded-full"
+          >
+            <img
+              id="sunset-img"
+              src="/img/map-pin.svg"
+              alt=""
+              class="w-full h-full"
+            />
+          </div>
+        </div>
       </div>
 
       <div class="location-container mx-auto mt-10">
         <div
-          class="w-10 h-10 rounded-full p-2 mx-auto"
+          id="pin-indicator-image"
+          class="w-12 h-12 rounded-full p-3 mx-auto"
           style="background-color: #61deaa"
         >
-          <img src="/img/map-pin.svg" alt="" class="w-full h-full" />
+          <img
+            id="pin-img"
+            src="/img/map-pin.svg"
+            alt=""
+            class="w-full h-full"
+          />
         </div>
         <p id="_place" class="text-center mt-3 font-semibold"></p>
       </div>

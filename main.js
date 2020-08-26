@@ -6,11 +6,9 @@ var timer1, timer2, timer3;
 
 var lat, lng;
 
-// blinking colon
-setInterval(function () {
-  document.getElementById("colon").style.visibility = toggle ? "visible" : "hidden";
-  toggle = !toggle;
-}, 1000);
+var prayer = [];
+
+var next = null;
 
 // show time at center
 function showTime () {
@@ -53,8 +51,18 @@ function getTime (lat, lng) {
 
       showTime();
 
+      document.getElementsByClassName('container')[0].classList.add('show');
+
       var storageData = JSON.parse(resp).data;
       storageData['expired'] = getTodayDate(true);
+
+      // blinking colon
+      setInterval(function () {
+        document.getElementById("colon").style.visibility = toggle ? "visible" : "hidden";
+        toggle = !toggle;
+        whatPrayNow();
+      }, 1000);
+
     } else {
       // We reached our target server, but it returned an error
     }
@@ -103,7 +111,7 @@ function renderTime (timings) {
     waktu.push(formattedTime);
   }
 
-  var prayers = [
+  prayers = [
     {
       name: 'fajr',
       interval: getTimeInterval(waktu[0], waktu[1]),
@@ -146,9 +154,25 @@ function renderTime (timings) {
       indicator.setAttribute('stroke-dasharray', prayers[x].interval + ', 100');
       indicator.setAttribute('data-time', prayers[x].time);
       indicator.setAttribute('data-name', prayers[x].name);
+    }
 
+    if (prayers[x].name == 'sunrise') {
+      document.getElementById("sunrise-indicator").style.transform = 'rotate(' + (minutes * 0.25 + 45) + 'deg)';
+      document.getElementById("sunrise-indicator-image").style.transform = 'rotate(' + (360 - (minutes * 0.25 + 45)) + 'deg)';
+    }
+    if (prayers[x].name == 'maghrib') {
+      document.getElementById("sunset-indicator").style.transform = 'rotate(' + (minutes * 0.25 + 45) + 'deg)';
+      document.getElementById("sunset-indicator-image").style.transform = 'rotate(' + (360 - (minutes * 0.25 + 45)) + 'deg)';
     }
   }
+
+  // setTimeout(function () {
+  //   document.getElementById("sunrise-indicator-image").classList.add('show');
+  //   document.getElementById("sunset-indicator-image").classList.add('show');
+  //   document.getElementById("pin-indicator-image").classList.add('show');
+
+  // }, 3000);
+
 
   document.getElementById('clock-container').classList.add('open');
   var els = document.querySelectorAll('.circle');
@@ -226,18 +250,57 @@ function isExpired (a, b) {
 function getLocation () {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-    console.log('navigator.geolocation.getCurrentPosition: ', navigator.geolocation);
   } else {
     x.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
 function showPosition (position) {
-  console.log('position.coords: ', position.coords);
   lat = position.coords.latitude;
   lng = position.coords.longitude;
 
   getTime(lat, lng);
+}
+
+function whatPrayNow () {
+  var d = new Date();
+  var d_full = d.getMonth() + 1 + '/' + d.getDate() + '/' + d.getFullYear();
+  if (prayers != undefined) {
+    for (var i = 0; i < prayers.length; i++) {
+      let p = new Date(d_full + ' ' + prayers[i].time);
+      if (d <= p) {
+        next = i;
+        document.getElementById('next-pray-name').innerText = prayers[next].name;
+        document.getElementById('next-pray-name').textContent = prayers[next].name;
+        document.getElementById('next-pray-name').classList.add(prayers[next].name);
+
+        // time left
+        var left = ((p.getTime() - d.getTime()) / 1000) / 60;
+
+        document.getElementById('next-pray-time').innerText = timeConvert(left);
+        document.getElementById('next-pray-time').textContent = timeConvert(left);
+        break;
+      } else {
+        // console.log('no', prayers[i].name);
+      }
+
+    }
+  }
+
+}
+
+function timeConvert (n) {
+  var num = n;
+  var hours = (num / 60);
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  if (rhours > 0) {
+    return "In " + rhours + "h " + rminutes + "m";
+  } else {
+    return "In " + rminutes + "m";
+
+  }
 }
 
 // getTime();
