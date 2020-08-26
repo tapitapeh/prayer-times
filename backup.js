@@ -34,27 +34,32 @@ function showTime () {
 }
 
 function getTime (lat, lng) {
-  /*
-    - Malaysia location only. Thanks to Ilhami (i906) for the API
-  */
-
+  // chrome.storage.sync.get('prayertimes24h', function (data) {
+  //   if (!isEmpty(data) && !isExpired(getTodayDate(), data[Object.keys(data)[0]].expired)) {
+  //     renderTime(data[Object.keys(data)[0]].timings);
+  //     showTime();
+  //   } else {
   var request = new XMLHttpRequest();
-
+  /*
+    - this API not 100% accurate. need better method like muslimpro.com
+    - hardcoded location. need to implement geolocation
+  */
+  // request.open('GET', 'http://api.aladhan.com/v1/timingsByCity?city=pekanbaru&country=indonesia&method=11', true);
   request.open('GET', 'https://mpt.i906.my/api/prayer/' + lat + ',' + lng, true);
 
   request.onload = function () {
     if (request.status >= 200 && request.status < 400) {
       var resp = request.responseText;
 
-      renderTime(JSON.parse(resp).data.times);
+      console.log('request.responseText: ', JSON.parse(request.responseText).data);
+      // renderTime(JSON.parse(request.responseText).data.timings);
+      // showTime();
 
-      document.getElementById("_place").innerText = JSON.parse(resp).data.place;
-      document.getElementById("_place").textContent = JSON.parse(resp).data.place;
-
-      showTime();
-
-      var storageData = JSON.parse(resp).data;
+      var storageData = JSON.parse(request.responseText).data;
       storageData['expired'] = getTodayDate(true);
+
+      // chrome.storage.sync.clear();
+      // chrome.storage.sync.set({ 'prayertimes24h': storageData })
     } else {
       // We reached our target server, but it returned an error
     }
@@ -65,9 +70,11 @@ function getTime (lat, lng) {
   };
 
   request.send();
+  //   }
+  // });
 }
 
-function getTimeInterval (a, z) {
+function getIntervalWaktu (a, z) {
   var awal = a.split(':');
   var awal_minutes = (+awal[0]) * 60 + (+awal[1]);
 
@@ -87,66 +94,30 @@ function getTimeInterval (a, z) {
 }
 
 function renderTime (timings) {
-
-  var today = new Date();
-
-  var prayer_today = timings[today.getDate() - 1];
-  var waktu = [];
-  for (var i = 0; i < prayer_today.length; i++) {
-    var date = new Date(prayer_today[i] * 1000);
-
-    var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-
-    // Will display time in 10:30 format
-    var formattedTime = hours + ':' + minutes.substr(-2);
-    waktu.push(formattedTime);
+  // hardcoded prayer names (using public API aladhan.com). need to enhance.
+  var interval_antarwaktu = {
+    'fajr': getIntervalWaktu(timings['Fajr'], timings['Sunrise']),
+    'dhuhr': getIntervalWaktu(timings['Dhuhr'], timings['Asr']),
+    'asr': getIntervalWaktu(timings['Asr'], timings['Maghrib']),
+    'maghrib': getIntervalWaktu(timings['Maghrib'], timings['Isha']),
+    'isha': getIntervalWaktu(timings['Isha'], timings['Fajr'])
   }
 
-  var prayers = [
-    {
-      name: 'fajr',
-      interval: getTimeInterval(waktu[0], waktu[1]),
-      time: waktu[0]
-    },
-    {
-      name: 'sunrise',
-      interval: getTimeInterval(waktu[1], waktu[2]),
-      time: waktu[1]
-    },
-    {
-      name: 'dhuhr',
-      interval: getTimeInterval(waktu[2], waktu[3]),
-      time: waktu[2]
-    },
-    {
-      name: 'asr',
-      interval: getTimeInterval(waktu[3], waktu[4]),
-      time: waktu[3]
-    },
-    {
-      name: 'maghrib',
-      interval: getTimeInterval(waktu[4], waktu[5]),
-      time: waktu[4]
-    },
-    {
-      name: 'isha',
-      interval: getTimeInterval(waktu[5], waktu[0]),
-      time: waktu[5]
-    },
-  ]
+  for (var x in timings) {
+    if (timings.hasOwnProperty(x)) {
+      var a = timings[x].split(':');
+      var minutes = (+a[0]) * 60 + (+a[1]);
 
-  for (var x in prayers) {
-    var a = prayers[x].time.split(':');
-    var minutes = (+a[0]) * 60 + (+a[1]);
+      // hardcoded. need to enhance.
+      var limaWaktu = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
 
-    if (prayers[x].name != 'sunrise') {
-      var indicator = document.getElementsByClassName(prayers[x].name)[0];
-      indicator.style.transform = 'rotate(' + minutes * 0.25 + 'deg)';
-      indicator.setAttribute('stroke-dasharray', prayers[x].interval + ', 100');
-      indicator.setAttribute('data-time', prayers[x].time);
-      indicator.setAttribute('data-name', prayers[x].name);
-
+      if (limaWaktu.indexOf(x.toLowerCase()) > -1) {
+        var indicator = document.getElementsByClassName(x.toLowerCase())[0];
+        indicator.style.transform = 'rotate(' + minutes * 0.25 + 'deg)';
+        indicator.setAttribute('stroke-dasharray', interval_antarwaktu[x.toLowerCase()] + ', 100');
+        indicator.setAttribute('data-time', timings[x]);
+        indicator.setAttribute('data-name', x);
+      }
     }
   }
 

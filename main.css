@@ -1,43 +1,50 @@
 :root {
-  --fajr: #438BB9;
-  --dhuhr: #72C3A7;
-  --asr: #54B29D;
-  --maghrib: #3ECDE6;
-  --isha: #5BBBDB;
-  --syuruk: #77C26E;
-  --bg: #E7E7E7;
+  --fajr: #66da67;
+  --dhuhr: #62dfaa;
+  --asr: #21c69b;
+  --maghrib: #4ee4e4;
+  --isha: #3ec7df;
+  --syuruk: #77c26e;
+  --bg: #e7e7e7;
 }
 
 body {
   /* background: #FAFAFA; */
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#EAEAEA)) fixed;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(#fff),
+      to(#eaeaea)
+    )
+    fixed;
 }
 
 .clock-bg {
-  position: absolute;
+  /* position: absolute;
   height: 300px;
   width: 300px;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  color: #000;
+  transform: translateX(-50%) translateY(-50%); */
+  /* color: #000;
   font-size: 50px;
-  background-image: url('/img/clock-background.svg');
+  background-image: url("/img/clock-background.svg");
   background-repeat: no-repeat;
-  
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .content-container {
   opacity: 0;
   position: absolute;
   -webkit-transition: opacity 0.1s ease-in;
-       -moz-transition: opacity 0.1s ease-in;
-        -ms-transition: opacity 0.1s ease-in;
-         -o-transition: opacity 0.1s ease-in;
-            transition: opacity 0.1s ease-in;
+  -moz-transition: opacity 0.1s ease-in;
+  -ms-transition: opacity 0.1s ease-in;
+  -o-transition: opacity 0.1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .content-container.open {
@@ -48,10 +55,10 @@ body {
   opacity: 0;
 
   -webkit-transition: opacity 0.1s ease-in;
-       -moz-transition: opacity 0.1s ease-in;
-        -ms-transition: opacity 0.1s ease-in;
-         -o-transition: opacity 0.1s ease-in;
-            transition: opacity 0.1s ease-in;
+  -moz-transition: opacity 0.1s ease-in;
+  -ms-transition: opacity 0.1s ease-in;
+  -o-transition: opacity 0.1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 .prayer-time-clock.open {
@@ -59,7 +66,7 @@ body {
 }
 
 #colon {
-  visibility: hidden
+  visibility: hidden;
 }
 
 .circular-chart {
@@ -91,18 +98,18 @@ body {
 }
 
 .prayer-indicators {
-  position: absolute;
+  /* position: absolute;
   width: 380px;
   height: 380px;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%); */
   opacity: 1;
   -webkit-transition: opacity 0.1s ease-in;
-       -moz-transition: opacity 0.1s ease-in;
-        -ms-transition: opacity 0.1s ease-in;
-         -o-transition: opacity 0.1s ease-in;
-            transition: opacity 0.1s ease-in;
+  -moz-transition: opacity 0.1s ease-in;
+  -ms-transition: opacity 0.1s ease-in;
+  -o-transition: opacity 0.1s ease-in;
+  transition: opacity 0.1s ease-in;
 }
 
 #circle-now {
@@ -158,4 +165,3 @@ body {
   stroke: var(--bg);
   background-color: var(--bg);
 }
-
