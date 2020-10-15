@@ -295,11 +295,19 @@ function timeConvert (n) {
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
+  var second = minutes * 60;
+  var rsecond = Math.round(second);
+
+  // if (rhours == 0 && rminutes == 0 && rsecond == 1) {
+  //   var audio = document.getElementById("azan");
+  //   audio.play();
+  // }
   if (rhours > 0) {
     return "In " + rhours + "h " + rminutes + "m";
-  } else {
+  } else if (rminutes > 0 && rsecond > 59) {
     return "In " + rminutes + "m";
-
+  } else {
+    return "In " + rsecond + "s";
   }
 }
 
